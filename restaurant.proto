@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package RestaurantOrderSys;
+
+service RestaurantOrderSys {
+    rpc GetOrderList(GetOrderListReq) returns (stream Order) {}
+    rpc PlaceOrder(Order) returns (PlaceOrderResp) {}
+    rpc CancelOrder(Order) returns (PlaceOrderResp) {}
+    rpc GetOrder(GetOrderListReq) returns (Order) {}
+}
+
+message Restaurant {
+    uint32 id = 1;
+    string name = 2;
+    Address address = 3;
+}
+
+message Address {
+    uint32 location = 1;
+    string name = 2;
+}
+
+message Order {
+    uint32 id = 1;
+    uint32 sku_id = 2;
+    OrderStatus status = 3;
+}
+
+enum OrderStatus {
+    SUCCEED = 0;
+    CANCEL = 1;
+}
+
+message OrderStatusD {
+    OrderStatus status = 1;
+}
+
+message custom {
+    uint32 id = 1;
+    string name = 2;
+    Address address = 3;
+}
+
+message PlaceOrderResp {
+    OrderStatus res = 1;
+}
+
+message GetOrderListReq {
+    repeated uint32 orderIds = 1;
+}
